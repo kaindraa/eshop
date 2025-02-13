@@ -9,4 +9,6 @@ public class Product {
     private UUID productId = UUID.randomUUID();
     private String productName;
     private int productQuantity;
+
+    
 }

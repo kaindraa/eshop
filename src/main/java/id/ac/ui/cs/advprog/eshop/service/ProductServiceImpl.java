@@ -26,12 +26,13 @@ public class ProductServiceImpl implements  ProductService{
         return productRepository.findById(productId);
     }
 
-    public void update(UUID productId, Product submittedProduct){
+    public void edit(UUID productId, Product submittedProduct){
         Product existingProduct = findById(productId);
-        existingProduct.setName(updatedProduct.getName());
-        existingProduct.setPrice(updatedProduct.getPrice());
+        existingProduct.setProductName(submittedProduct.getProductName());
+        existingProduct.setProductQuantity(submittedProduct.getProductQuantity());
         productRepository.save(existingProduct);
     }
+
     @Override
     public List<Product> findAll(){
         Iterator<Product> productIterator = productRepository.findAll();
