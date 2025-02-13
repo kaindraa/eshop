@@ -22,7 +22,7 @@ public class ProductController {
     public String createProductPage(Model model) {
         Product product = new Product();
         model.addAttribute("product", product);
-        return "createProduct";
+        return "CreateProduct";
 
     }
 
@@ -36,7 +36,7 @@ public class ProductController {
     public String editProductPage(@PathVariable UUID productId, Model model) {
         Product product = service.findById(productId);
         model.addAttribute("product", product);
-        return "editProduct"; // This is your Thymeleaf template for editing
+        return "EditProduct"; // This is your Thymeleaf template for editing
     }
 
     @PostMapping("/edit/{productId}")
@@ -50,7 +50,7 @@ public class ProductController {
     public String productListPage(Model model){
         List <Product> allProducts = service.findAll();
         model.addAttribute("products", allProducts);
-        return "productList";
+        return "ProductList";
     }
 
 }
