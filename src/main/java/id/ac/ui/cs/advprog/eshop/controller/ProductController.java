@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @Controller
 @RequestMapping("/product")
@@ -30,6 +31,20 @@ public class ProductController {
         service.create(product);
         return "redirect:list";
     }
+
+    @GetMapping("/edit/{productId}")
+    public String editProductPage(@PathVariable UUID productId, Model model) {
+        Product product = service.findById(productId);
+        model.addAttribute("product", product);
+        return "editProduct"; // This is your Thymeleaf template for editing
+    }
+
+    @PostMapping("/edit/{productId}")
+    public String updateProduct(@PathVariable UUID productId, @ModelAttribute Product updatedProduct) {
+        service.update(productId, updatedProduct);
+        return "redirect:/product/list";
+    }
+
 
     @GetMapping("/list")
     public String productListPage(Model model){
