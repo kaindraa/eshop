@@ -32,6 +32,10 @@ public class ProductController {
         return "redirect:list";
     }
 
+    public String deleteProduct(@PathVariable("productId") UUID productId) {
+        service.delete(productId);
+        return "redirect:/product/list";
+    }
 
     @GetMapping("/list")
     public String productListPage(Model model){
