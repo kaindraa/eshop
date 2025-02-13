@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class ProductServiceImpl implements  ProductService{
@@ -19,6 +20,12 @@ public class ProductServiceImpl implements  ProductService{
         productRepository.create(product);
         return product;
     }
+
+    @Override
+    public void delete(UUID productId){
+        productRepository.delete(productId);
+    }
+
 
     @Override
     public List<Product> findAll(){

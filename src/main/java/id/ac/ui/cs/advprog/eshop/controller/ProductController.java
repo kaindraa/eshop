@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @Controller
 @RequestMapping("/product")
@@ -30,6 +31,7 @@ public class ProductController {
         service.create(product);
         return "redirect:list";
     }
+
 
     @GetMapping("/list")
     public String productListPage(Model model){
