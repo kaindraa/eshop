@@ -6,6 +6,6 @@ import java.util.UUID;
 
 public interface ProductService {
     public Product create(Product product);
-    public void delete(UUID product);
+    public void delete(String product);
     public List<Product> findAll();
 }
