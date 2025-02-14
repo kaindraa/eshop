@@ -42,7 +42,7 @@ public class ProductController {
     public String editProductPage(@PathVariable UUID productId, Model model) {
         Product product = service.findById(productId);
         model.addAttribute("product", product);
-        return "EditProduct"; // This is your Thymeleaf template for editing
+        return "EditProduct";
     }
 
     @PostMapping("/edit/{productId}")
