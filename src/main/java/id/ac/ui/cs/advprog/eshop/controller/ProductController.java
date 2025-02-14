@@ -38,6 +38,19 @@ public class ProductController {
         return "redirect:/product/list";
     }
 
+    @GetMapping("/edit/{productId}")
+    public String editProductPage(@PathVariable UUID productId, Model model) {
+        Product product = service.findById(productId);
+        model.addAttribute("product", product);
+        return "EditProduct"; // This is your Thymeleaf template for editing
+    }
+
+    @PostMapping("/edit/{productId}")
+    public String editProduct(@PathVariable UUID productId, @ModelAttribute Product updatedProduct) {
+        service.edit(productId, updatedProduct);
+        return "redirect:/product/list";
+    }
+
     @GetMapping("/list")
     public String productListPage(Model model){
         List <Product> allProducts = service.findAll();
