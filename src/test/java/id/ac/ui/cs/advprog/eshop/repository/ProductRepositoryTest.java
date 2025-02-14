@@ -9,6 +9,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 //import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.util.Iterator;
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -17,6 +18,7 @@ class ProductRepositoryTest {
 
     @InjectMocks
     ProductRepository productRepository;
+    private Product sampleProduct;
 
     @BeforeEach
     void setUp() {
@@ -66,5 +68,55 @@ class ProductRepositoryTest {
         savedProduct = productIterator.next();
         assertEquals(product2.getProductId(), savedProduct.getProductId());
         assertFalse(productIterator.hasNext());
+    }
+
+    @Test
+    void testUpdateProduct() {
+        productRepository = new ProductRepository();
+        sampleProduct = new Product();
+        sampleProduct.setProductName("Lemari");
+        sampleProduct.setProductQuantity(10);
+        productRepository.create(sampleProduct);
+        sampleProduct.setProductName("Meja");
+        sampleProduct.setProductQuantity(15);
+
+        Product updatedProduct = productRepository.save(sampleProduct);
+        assertNotNull(updatedProduct);
+        assertEquals("Meja", updatedProduct.getProductName());
+        assertEquals(15, updatedProduct.getProductQuantity());
+    }
+
+    @Test
+    void testUpdateProductNotFound() {
+        Product nonExistentProduct = new Product();
+        nonExistentProduct.setProductId(UUID.randomUUID().toString());
+        nonExistentProduct.setProductName("Kursi");
+        nonExistentProduct.setProductQuantity(7);
+
+        Product updatedProduct = productRepository.save(nonExistentProduct);
+        assertNull(updatedProduct);
+    }
+
+    @Test
+    void testDeleteProduct() {
+        productRepository = new ProductRepository();
+        sampleProduct = new Product();
+        sampleProduct.setProductName("Lemari");
+        sampleProduct.setProductQuantity(100);
+        productRepository.create(sampleProduct);
+        String idToDelete = sampleProduct.getProductId();
+        productRepository.delete(sampleProduct.getProductId());
+        assertNull(productRepository.findById(idToDelete));
+    }
+    @Test
+    void testDeleteProductNotFound() {
+        productRepository = new ProductRepository();
+        sampleProduct = new Product();
+        sampleProduct.setProductName("Lemari");
+        sampleProduct.setProductQuantity(10);
+        productRepository.create(sampleProduct);
+        String fakeId = UUID.randomUUID().toString();
+        productRepository.delete(fakeId);
+        assertNotNull(productRepository.findById(sampleProduct.getProductId()));
     }
 }
