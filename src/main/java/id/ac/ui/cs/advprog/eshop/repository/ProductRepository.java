@@ -16,7 +16,7 @@ public class ProductRepository {
         return product;
     }
 
-    public  Product findById(UUID productId){
+    public  Product findById(String productId){
         return productData.stream().filter(p->p.getProductId().equals(productId)).findFirst().orElse(null);
     }
 

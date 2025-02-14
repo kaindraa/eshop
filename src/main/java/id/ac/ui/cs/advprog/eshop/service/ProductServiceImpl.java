@@ -22,11 +22,11 @@ public class ProductServiceImpl implements  ProductService{
     }
 
     @Override
-    public Product findById(UUID productId){
+    public Product findById(String productId){
         return productRepository.findById(productId);
     }
 
-    public void edit(UUID productId, Product submittedProduct){
+    public void edit(String productId, Product submittedProduct){
         Product existingProduct = findById(productId);
         existingProduct.setProductName(submittedProduct.getProductName());
         existingProduct.setProductQuantity(submittedProduct.getProductQuantity());

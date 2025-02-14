@@ -33,14 +33,14 @@ public class ProductController {
     }
 
     @GetMapping("/edit/{productId}")
-    public String editProductPage(@PathVariable UUID productId, Model model) {
+    public String editProductPage(@PathVariable String productId, Model model) {
         Product product = service.findById(productId);
         model.addAttribute("product", product);
         return "EditProduct"; // This is your Thymeleaf template for editing
     }
 
     @PostMapping("/edit/{productId}")
-    public String editProduct(@PathVariable UUID productId, @ModelAttribute Product updatedProduct) {
+    public String editProduct(@PathVariable String productId, @ModelAttribute Product updatedProduct) {
         service.edit(productId, updatedProduct);
         return "redirect:/product/list";
     }
