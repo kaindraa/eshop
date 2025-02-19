@@ -7,9 +7,9 @@ name: pmd
 
 on:
   push:
-    branches: [ "master" ]
+    branches: [ "master", "module-2-exercise" ]
   pull_request:
-    branches: [ "master" ]
+    branches: [ "master" , "module-2-exercise"]
   schedule:
     - cron: '43 8 * * 5'
 
