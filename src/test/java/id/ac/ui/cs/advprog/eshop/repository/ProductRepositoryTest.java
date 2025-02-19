@@ -67,4 +67,75 @@ class ProductRepositoryTest {
         assertEquals(product2.getProductId(), savedProduct.getProductId());
         assertFalse(productIterator.hasNext());
     }
+
+    @Test
+    void testDeleteProduct() {
+        Product product = new Product();
+        String productId = "eb558e9f-1c39-460e-8860-71af6af63bd6";
+        product.setProductId("eb558e9f-1c39-460e-8860-71af6af63bd6");
+        product.setProductName("Sampo Cap Bambang");
+        product.setProductQuantity(100);
+        productRepository.create(product);
+
+        productRepository.delete(productId);
+
+        assertNull(productRepository.findById(productId));
+    }
+
+    @Test
+    void testFindById() {
+        Product product = new Product();
+        String productId = "eb558e9f-1c39-460e-8860-71af6af63bd6";
+        product.setProductId("eb558e9f-1c39-460e-8860-71af6af63bd6");
+        product.setProductName("Sampo Cap Bambang");
+        product.setProductQuantity(10);
+        productRepository.create(product);
+
+        Product findProduct = productRepository.findById(productId);
+
+        assertEquals(product, findProduct);
+    }
+
+    @Test
+    void testFindByIdNeg(){
+        Product findProduct = productRepository.findById("not-existing-product-id");
+        assertNull(findProduct);
+
+    }
+
+    @Test
+    void testSave_UpdateExistingProduct() {
+        Product existingProduct = new Product();
+        existingProduct.setProductId("eb558e9f-1c39-460e-8860-71af6af63bd");
+        existingProduct.setProductName("Laptop");
+        existingProduct.setProductQuantity(10);
+
+        productRepository.create(existingProduct);
+
+        Product updatedProduct = new Product();
+        updatedProduct.setProductId("eb558e9f-1c39-460e-8860-71af6af63bd");
+        updatedProduct.setProductName("Gaming Laptop");
+        updatedProduct.setProductQuantity(20);
+
+        Product result = productRepository.save(updatedProduct);
+
+        assertNotNull(result);
+        assertEquals("eb558e9f-1c39-460e-8860-71af6af63bd", result.getProductId());
+        assertEquals("Gaming Laptop", result.getProductName());
+        assertEquals(20, result.getProductQuantity());
+    }
+
+    @Test
+    void testSave_NonExistentProduct() {
+        Product newProduct = new Product();
+        newProduct.setProductId("eb558e9f-1c39-460e-8860-71af6af63bd");
+        newProduct.setProductName("Smartphone");
+        newProduct.setProductQuantity(15);
+
+        Product result = productRepository.save(newProduct);
+
+
+        assertNull(result);
+    }
+
 }
