@@ -12,7 +12,7 @@ public class HomepageController {
     private ProductService service;
 
     @GetMapping("/")
-    public String createProductPage(Model model) {
+    public String Homepage(Model model) {
         return "Homepage";
 
     }
