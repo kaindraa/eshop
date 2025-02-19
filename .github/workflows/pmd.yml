@@ -1,4 +1,4 @@
-name: PMD Code Analysis
+name: pmd
 
 on:
   push:
