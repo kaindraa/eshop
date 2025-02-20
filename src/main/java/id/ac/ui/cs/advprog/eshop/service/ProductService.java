@@ -5,10 +5,10 @@ import java.util.List;
 import java.util.UUID;
 
 public interface ProductService {
-    public Product create(Product product);
-    public List<Product> findAll();
-    public void delete(String product);
-    public Product findById(String productId);
-    public void edit(String productId, Product submittedProduct);
+    Product create(Product product);
+    List<Product> findAll();
+    void delete(String product);
+    Product findById(String productId);
+    void edit(String productId, Product submittedProduct);
 
 }
