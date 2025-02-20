@@ -20,6 +20,7 @@ class ProductRepositoryTest {
 
     @BeforeEach
     void setUp() {
+        //I left this empty
     }
 
     @Test
@@ -104,7 +105,7 @@ class ProductRepositoryTest {
     }
 
     @Test
-    void testSave_UpdateExistingProduct() {
+    void testSaveUpdateExistingProduct() {
         Product existingProduct = new Product();
         existingProduct.setProductId("eb558e9f-1c39-460e-8860-71af6af63bd");
         existingProduct.setProductName("Laptop");
@@ -126,7 +127,7 @@ class ProductRepositoryTest {
     }
 
     @Test
-    void testSave_NonExistentProduct() {
+    void testSaveNonExistentProduct() {
         Product newProduct = new Product();
         newProduct.setProductId("eb558e9f-1c39-460e-8860-71af6af63bd");
         newProduct.setProductName("Smartphone");
