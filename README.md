@@ -1,10 +1,12 @@
 # Eshop
+Deployment link: https://kaindraa-adpro-module-2.koyeb.app/
+
+---
 ### Kaindra Rizq Sachio
 ### 2306274964   
 ### CSCM602223 - Pemrograman Lanjut
 
 ---
-
 ## Module 1: Coding Standards
 ### Reflection 1
 > You already implemented two new features using Spring Boot. Check again your source code and evaluate the coding standards that you have learned in this module. Write clean code principles and secure coding practices that have been applied to your code.  If you find any mistake in your source code, please explain how to improve your code. Please write your reflection inside the repository's README.md file.
@@ -39,6 +41,7 @@ Ketika membuat functional test baru untuk memverifikasi jumlah item di daftar pr
 
 Untuk mengatasi hal ini, saya dapat menggunakan kelas dasar (base test class) untuk menyimpan setup umum, sehingga functional test baru hanya perlu mengambil dari itu.
 
+---
 ## Module 2: Continuous Integration, DevOps
 
 ### Reflection:
