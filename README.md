@@ -60,5 +60,8 @@ Code Quality Issues yang saya perbaiki adalah:
 Ya, kode saya sudah memenuhi definisi Continuous Integration dan Continuous Deployment. Untuk CI, saya sudah menerapkan unit-test, Menjalankan analisis kode Scorecard (Code Security) dan PMD (Code quality). Untuk CD, saya sudah menerapkan deploy otomatis setiap ada push baru ke repository saya. Hal-hal tersebut memastikan setiap perubahan kode saya dapat langsung diuji, dianalisis, dan dideploy secara otomatis.
 Tetapi, masih banyak penerapan lain yang dapat diterapkan di kode saya. CI/CD sangatlah luas dan tidak terbatas pada hal-hal yang saya sebutkan.
 
+### Code Coverage
+![image](https://github.com/user-attachments/assets/40b77fbc-f767-4c82-a81b-4f85a60294e6)
+
 
 
