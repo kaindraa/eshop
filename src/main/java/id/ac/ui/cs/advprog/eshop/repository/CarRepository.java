@@ -52,4 +52,8 @@ public class CarRepository {
         carData.removeIf(car -> car.getCarId().equals(id));
     }
 
+    public Car save(Car car) {
+        carData.add(car);
+        return car;
+    }
 }

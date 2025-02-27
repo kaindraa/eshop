@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class CarServiceImpl implements CarService {
@@ -15,10 +16,12 @@ public class CarServiceImpl implements CarService {
 
     @Override
     public Car create(Car car) {
-        // TODO Auto-generated method stub
-        carRepository.create(car);
-        return car;
+        if (car.getCarId() == null || car.getCarId().isEmpty()) {
+            car.setCarId(UUID.randomUUID().toString());
+        }
+        return carRepository.save(car);
     }
+
 
     @Override
     public List<Car> findAll() {
@@ -35,10 +38,16 @@ public class CarServiceImpl implements CarService {
     }
 
     @Override
-    public void update(String carId, Car car) {
-        // TODO Auto-generated method stub
-        carRepository.update(carId, car);
+    public void update(String carId, Car updatedCar) {
+        // Memperbarui informasi mobil berdasarkan ID
+        Car existingCar = carRepository.findById(carId);
+        if (existingCar != null) {
+            existingCar.setCarName(updatedCar.getCarName());
+            existingCar.setCarColor(updatedCar.getCarColor());
+            existingCar.setCarQuantity(updatedCar.getCarQuantity());
+        }
     }
+
 
     @Override
     public void deleteCarById(String carId) {
