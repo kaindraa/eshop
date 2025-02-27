@@ -12,14 +12,7 @@ public class CarRepository {
     static int id = 0;
     private List<Car> carData = new ArrayList<>();
 
-    public Car create(Car car) {
-        if (car.getCarId() == null) {
-            UUID uuid = UUID.randomUUID();
-            car.setCarId(uuid.toString());
-        }
-        carData.add(car);
-        return car;
-    }
+
 
     public Iterator<Car> findAll() {
         return carData.iterator();
@@ -34,26 +27,19 @@ public class CarRepository {
         return null;
     }
 
-    public Car update(String id, Car updatedCar) {
-        for (int i = 0; i < carData.size(); i++) {
-            Car car = carData.get(i);
-            if (car.getCarId().equals(id)) {
-                // Update the existing car with the new information
-                car.setCarName(updatedCar.getCarName());
-                car.setCarColor(updatedCar.getCarColor());
-                car.setCarQuantity(updatedCar.getCarQuantity());
-                return car;
-            }
-        }
-        return null; // Handle the case where the car is not found
-    }
 
     public void delete(String id) {
         carData.removeIf(car -> car.getCarId().equals(id));
     }
 
     public Car save(Car car) {
-        carData.add(car);
+        for (int i = 0; i < carData.size(); i++) {
+            if (carData.get(i).getCarId().equals(car.getCarId())) {
+                carData.set(i, car); // Update existing car
+                return car;
+            }
+        }
+        carData.add(car); // Add new car if not found
         return car;
     }
 }
