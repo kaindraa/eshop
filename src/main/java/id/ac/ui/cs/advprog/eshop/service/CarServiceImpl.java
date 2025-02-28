@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class CarServiceImpl implements CarService {
@@ -15,9 +16,14 @@ public class CarServiceImpl implements CarService {
 
     @Override
     public Car create(Car car) {
-        // TODO Auto-generated method stub
-        carRepository.create(car);
-        return car;
+        if (carRepository.findById(car.getCarId()) != null) {
+            throw new IllegalArgumentException("Car with this ID already exists!");
+        }
+
+        if (car.getCarId() == null || car.getCarId().isEmpty()) {
+            car.setCarId(UUID.randomUUID().toString());
+        }
+        return carRepository.save(car);
     }
 
     @Override
@@ -34,15 +40,26 @@ public class CarServiceImpl implements CarService {
         return car;
     }
 
-    @Override
-    public void update(String carId, Car car) {
-        // TODO Auto-generated method stub
-        carRepository.update(carId, car);
-    }
+
+
 
     @Override
     public void deleteCarById(String carId) {
         // TODO Auto-generated method stub
         carRepository.delete(carId);
+    }
+
+    @Override
+    public void update(String carId, Car updatedCar) {
+        Car existingCar = carRepository.findById(carId);
+        if (existingCar == null) {
+            throw new IllegalArgumentException("Car with ID " + carId + " not found.");
+        }
+
+        existingCar.setCarName(updatedCar.getCarName());
+        existingCar.setCarColor(updatedCar.getCarColor());
+        existingCar.setCarQuantity(updatedCar.getCarQuantity());
+
+        carRepository.save(existingCar); // Save updated car
     }
 }

@@ -63,5 +63,50 @@ Tetapi, masih banyak penerapan lain yang dapat diterapkan di kode saya. CI/CD sa
 ### Code Coverage
 ![image](https://github.com/user-attachments/assets/40b77fbc-f767-4c82-a81b-4f85a60294e6)
 
+## Module 3: Maintanability, OO Principles
+
+### Reflection:
+
+#### Principles I applied
+> Explain what principles you apply to your project!
+
+
+Saya menerapkan semua prinsip SOLID dalam proyek saya:
+
+1. **Single Responsibility Principle (SRP):**  
+   Sebelumnya (_branch before-solid_), `CarRepository` menangani logika bisnis, padahal seharusnya hanya berfungsi sebagai pengelola data. Logika bisnis seharusnya berada di `CarServiceImpl`. Oleh karena itu, saya memindahkan logika bisnis dari `CarRepository` ke `CarServiceImpl`.
+
+2. **Open/Closed Principle (OCP):**  
+   Saya menambahkan metode `update()` pada model `Car` agar dapat dimodifikasi di masa mendatang tanpa mengubah kode yang sudah ada.
+
+3. **Liskov Substitution Principle (LSP):**  
+   Sebelumnya (_branch before-solid_), `CarController` merupakan subclass dari `ProductController`. Namun, hal ini tidak tepat karena kedua kelas memiliki tujuan yang berbeda, dan `CarController` tidak dapat menggantikan `ProductController` tanpa mengubah perilakunya.
+
+4. **Interface Segregation Principle (ISP):**  
+   Saya telah memisahkan interface `CarService` dan `ProductService` karena keduanya memiliki fungsi yang berbeda, sehingga tidak perlu digabungkan dalam satu interface yang lebih besar.
+
+5. **Dependency Inversion Principle (DIP):**  
+   Sebelumnya (_branch before-solid_), `CarController` bergantung langsung pada `CarServiceImpl`, yang melanggar prinsip ini karena modul tingkat tinggi tidak boleh bergantung pada modul tingkat rendah. Oleh karena itu, saya memperbaikinya dengan membuat `CarController` bergantung pada interface `CarService`, sehingga ketergantungan terhadap implementasi spesifik dapat dihindari.
+
+#### Advantages of applying SOLID
+> Explain the advantages of applying SOLID principles to your project with examples.
+
+
+Dengan menerapkan prinsip SOLID, kode menjadi lebih modular dan terstruktur, sehingga perubahan pada satu komponen tidak memengaruhi komponen lain yang tidak terkait. Sebelumnya, dalam branch _before-solid_, perubahan pada `ProductController` dapat berdampak pada `CarController` karena `CarController` adalah subclass dari `ProductController`. Padahal, keduanya memiliki tanggung jawab yang berbeda. Oleh karena itu, `CarController` dipisahkan dari `ProductController`, bertujuan agar masing-masing kelas dapat beroperasi secara independen sesuai dengan tanggung jawabnya. Hal ini membuat kode lebih fleksibel, mudah diperluas, dan lebih stabil terhadap perubahan.
+
+
+
+
+
+
+
+#### Disadvantages of not applying SOLID
+> Explain the disadvantages of not applying SOLID principles to your project with examples.
+
+Tidak menerapkan prinsip SOLID dalam proyek saya dapat menyebabkan kode menjadi sulit dipelihara, diperluas, dan diuji. Misalnya, sebelumnya, `CarRepository` menangani logika bisnis pembuatan UUID dan update attribute `Car`, hal tersebut melanggar Single Responsibility Principle (SRP) karena seharusnya logika bisnis tersebut dilakukan di CarServiceImpl.  Akibatnya, perubahan dalam aturan bisnis bisa memengaruhi cara data dikelola, meningkatkan risiko bug, dan membuat kode sulit diuji. Dengan memindahkan logika bisnis ke `CarServiceImpl`, kode menjadi lebih terstruktur, dan mudah dikelola.
+
+
+
+
 
 
