@@ -109,7 +109,7 @@ Tidak menerapkan prinsip SOLID dalam proyek saya dapat menyebabkan kode menjadi 
 
 ### Reflection
 
-#### Reflect based on Percival
+#### Reflect based on Percival (2017)
 > Reflect based on Percival (2017) proposed self-reflective questions (in “Principles and Best Practice of Testing” submodule, chapter “Evaluating Your Testing Objectives”), whether this TDD flow is useful enough for you or not. If not, explain things that you need to do next time you make more tests.
 
 Correctess:
@@ -123,3 +123,15 @@ Maintainability:
 Productive Workflow:
 1. Integration test saya di `OrderRepositoryTest` masih menggunakan database asli. Jika project saya berkembang besar, hal ini dapat membuat test berjalan lama. Hal ini dapat diperbaiki dengan menggunakan `InMemoryDatabase`
 2. Saya belum memisahkan subset test execution. Saya dapat melakukan ini dengan menggunakan Tagging `@Tag` pada test saya.
+
+#### Reflect based on F.I.R.S.T
+> You have created unit tests in Tutorial. Now reflect whether your tests have successfully followed F.I.R.S.T. principle or not. If not, explain things that you need to do the next time you create more tests.
+1. First: Test saya sudah cukup cepat dijalankan karena saya sudah banyak menggunakan mocking.
+
+2. Independent: Test saya sudah dituli secara independen. Setiap data uji diinisialisasi ulang melalui fungsi `setUp()` yang dilaksanakan diawal ditandai dengan `@BeforeEach`. Tetapi, kode saya belum menggunakan `tearDown()`
+
+3. Repeatable: Sudah cukup baik. Saya sudah menggunakan `@BeforeEach` dan mocking yang membuat tes saya lebih deterministik
+
+4. Self-Validating: Test saya belum memiliki massage untuk human. Selain itu, banya test yang memiliki `assertion` cukup banyak, hal ini tidak sesuai dengan "one test one assertion"
+
+5. Thorough: Semua modul yang saya test sudah men-cover baik happy maupun unhappy paths. Tetapi, masih ada edge cases untuk unhappy path yang belum di-cover oleh test saya.
