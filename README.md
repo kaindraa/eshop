@@ -105,8 +105,21 @@ Dengan menerapkan prinsip SOLID, kode menjadi lebih modular dan terstruktur, seh
 
 Tidak menerapkan prinsip SOLID dalam proyek saya dapat menyebabkan kode menjadi sulit dipelihara, diperluas, dan diuji. Misalnya, sebelumnya, `CarRepository` menangani logika bisnis pembuatan UUID dan update attribute `Car`, hal tersebut melanggar Single Responsibility Principle (SRP) karena seharusnya logika bisnis tersebut dilakukan di CarServiceImpl.  Akibatnya, perubahan dalam aturan bisnis bisa memengaruhi cara data dikelola, meningkatkan risiko bug, dan membuat kode sulit diuji. Dengan memindahkan logika bisnis ke `CarServiceImpl`, kode menjadi lebih terstruktur, dan mudah dikelola.
 
+## Module 4: TDD & Refactoring
 
+### Reflection
 
+#### Reflect based on Percival
+> Reflect based on Percival (2017) proposed self-reflective questions (in “Principles and Best Practice of Testing” submodule, chapter “Evaluating Your Testing Objectives”), whether this TDD flow is useful enough for you or not. If not, explain things that you need to do next time you make more tests.
 
+Correctess:
+1. Code saya hanya menerapkan unit-test, tetapi belum menerapkan functional-test
+2. Secara umum, code saya sudah banyak menangani edge case secara baik. Misalnya, sudah melakukan test apabila `findAllByAuthor` menerima parameter `String name` yang semuanya lowercase. Namun, masih ada edge-case lain yang belum ter-cover, misalnya apabila `findAllByAuthor` menerima parameter `String name` null. Hal ini dapat bermasalah jika code mengalami `NullPointerExceptioon`.
 
+Maintainability:
+1. Code saya sudah cukup aman untuk dilakukan refactor, hal ini karena unit-test yang saya buat sudah berfokus kepada hasil, bukan proses dari code. Oleh karena itu, melakukan perubahan di code tidak akan mengganggu hasil unit-test saya. 
+2. Code saya sudah memiliki jumlah unit-test (melalui Mockito) yang lebih banyak dibandingkan integration, hal ini membantu saya mendapatkan feedbak yang cukup dari desain code saya.
 
+Productive Workflow:
+1. Integration test saya di `OrderRepositoryTest` masih menggunakan database asli. Jika project saya berkembang besar, hal ini dapat membuat test berjalan lama. Hal ini dapat diperbaiki dengan menggunakan `InMemoryDatabase`
+2. Saya belum memisahkan subset test execution. Saya dapat melakukan ini dengan menggunakan Tagging `@Tag` pada test saya.
