@@ -5,42 +5,26 @@ import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public class PaymentRepository {
 
-    private List<Payment> payments = new ArrayList<>();
+    private final List<Payment> payments = new ArrayList<>();
 
-    public Payment save(Payment Payment) {
-        int i = 0;
-        for (Payment savedPayment : payments) {
-            if (savedPayment.getId().equals(Payment.getId())) {
-                payments.remove(i);
-                payments.add(i, Payment);
-                return Payment;
-            }
-            i += 1;
-        }
-
-        payments.add(Payment);
-        return Payment;
+    public Payment save(Payment payment) {
+        payments.removeIf(existing -> existing.getId().equals(payment.getId()));
+        payments.add(payment);
+        return payment;
     }
-    public Payment getPayment(String id) {
-        for (Payment savedPayment : payments) {
-            if (savedPayment.getId().equals(id)) {
-                return savedPayment;
-            }
-        }
-        return null;
+
+    public Payment getPayment(String Id) {
+        return payments.stream()
+                .filter(payment -> payment.getId().equals(Id))
+                .findFirst().orElse(null);
     }
 
     public List<Payment> getAllPayments() {
-        List<Payment> result = new ArrayList<>();
-        for (Payment savedPayment : payments) {
-            result.add(savedPayment);
-        }
-
-        return result;
+        return List.copyOf(payments);
     }
 }
-
