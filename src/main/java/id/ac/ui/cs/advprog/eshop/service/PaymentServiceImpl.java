@@ -12,7 +12,7 @@ import java.util.UUID;
 
 public class PaymentServiceImpl implements PaymentService {
 
-    private PaymentRepository paymentRepository;
+    private final PaymentRepository paymentRepository;
 
     public PaymentServiceImpl(PaymentRepository paymentRepository) {
         this.paymentRepository = paymentRepository;
@@ -20,31 +20,19 @@ public class PaymentServiceImpl implements PaymentService {
 
     @Override
     public Payment addPayment(Order order, String method, Map<String, String> paymentData) {
-        Payment payment;
+        PaymentStatus paymentStatus;
+
         if (PaymentMethod.VOUCHER_CODE.getValue().equals(method)) {
-            String voucherCode = paymentData.get("voucherCode");
-            if (voucherCode != null && voucherCode.length() == 16 && voucherCode.startsWith("ESHOP")
-                    && voucherCode.chars().filter(Character::isDigit).count() == 8) {
-                payment = new Payment(UUID.randomUUID().toString(), method, PaymentStatus.SUCCESS.getValue(), paymentData);
-                order.setStatus(OrderStatus.SUCCESS.getValue());
-            } else {
-                payment = new Payment(UUID.randomUUID().toString(), method, PaymentStatus.REJECTED.getValue(), paymentData);
-                order.setStatus(OrderStatus.FAILED.getValue());
-            }
+            paymentStatus = validateVoucherPayment(paymentData);
         } else if (PaymentMethod.BANK_TRANSFER.getValue().equals(method)) {
-            String bankName = paymentData.get("bankName");
-            String referenceCode = paymentData.get("referenceCode");
-            if (bankName != null && !bankName.isEmpty() && referenceCode != null && !referenceCode.isEmpty()) {
-                payment = new Payment(UUID.randomUUID().toString(), method, PaymentStatus.SUCCESS.getValue(), paymentData);
-                order.setStatus(OrderStatus.SUCCESS.getValue());
-            } else {
-                payment = new Payment(UUID.randomUUID().toString(), method, PaymentStatus.REJECTED.getValue(), paymentData);
-                order.setStatus(OrderStatus.FAILED.getValue());
-            }
+            paymentStatus = validateBankTransferPayment(paymentData);
         } else {
-            payment = new Payment(UUID.randomUUID().toString(), method, PaymentStatus.REJECTED.getValue(), paymentData);
-            order.setStatus(OrderStatus.FAILED.getValue());
+            paymentStatus = PaymentStatus.REJECTED;
         }
+
+        order.setStatus(paymentStatus == PaymentStatus.SUCCESS ? OrderStatus.SUCCESS.getValue() : OrderStatus.FAILED.getValue());
+
+        Payment payment = new Payment(UUID.randomUUID().toString(), method, paymentStatus.getValue(), paymentData);
         return paymentRepository.save(payment);
     }
 
@@ -65,5 +53,23 @@ public class PaymentServiceImpl implements PaymentService {
     @Override
     public List<Payment> getAllPayments() {
         return paymentRepository.getAllPayments();
+    }
+
+    private PaymentStatus validateVoucherPayment(Map<String, String> paymentData) {
+        String voucherCode = paymentData.get("voucherCode");
+        if (voucherCode != null && voucherCode.length() == 16 && voucherCode.startsWith("ESHOP")
+                && voucherCode.chars().filter(Character::isDigit).count() == 8) {
+            return PaymentStatus.SUCCESS;
+        }
+        return PaymentStatus.REJECTED;
+    }
+
+    private PaymentStatus validateBankTransferPayment(Map<String, String> paymentData) {
+        String bankName = paymentData.get("bankName");
+        String referenceCode = paymentData.get("referenceCode");
+        if (bankName != null && !bankName.isEmpty() && referenceCode != null && !referenceCode.isEmpty()) {
+            return PaymentStatus.SUCCESS;
+        }
+        return PaymentStatus.REJECTED;
     }
 }
