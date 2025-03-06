@@ -1,5 +1,7 @@
 package id.ac.ui.cs.advprog.eshop.model;
 
+import id.ac.ui.cs.advprog.eshop.enums.PaymentMethod;
+import id.ac.ui.cs.advprog.eshop.enums.PaymentStatus;
 import org.junit.jupiter.api.Test;
 import java.util.Map;
 import java.util.HashMap;
@@ -17,14 +19,14 @@ public class PaymentTest {
         paymentData.put("voucherCode", "ESHOP12345678ABC");
 
         Payment payment = new Payment("3c011546-313a-4471-b897-8888e7b9cede",
-                "VOUCHER_CODE",
-                "REJECTED",
+                PaymentMethod.BANK_TRANSFER.getValue(),
+                PaymentStatus.REJECTED.getValue(),
                 paymentData
         );
 
         assertEquals("3c011546-313a-4471-b897-8888e7b9cede", payment.getId());
-        assertEquals("VOUCHER_CODE", payment.getMethod());
-        assertEquals("REJECTED", payment.getStatus());
+        assertEquals(PaymentMethod.BANK_TRANSFER.getValue(), payment.getMethod());
+        assertEquals(PaymentStatus.REJECTED.getValue(), payment.getStatus());
         assertEquals(paymentData, payment.getPaymentData());
 
     }
@@ -37,7 +39,7 @@ public class PaymentTest {
         assertThrows(IllegalArgumentException.class, () -> {
             Payment payment = new Payment("3c011546-313a-4471-b897-8888e7b9cede",
                     "invalid-voucher",
-                    "REJECTED",
+                    PaymentStatus.REJECTED.getValue(),
                     paymentData
             );
         });
@@ -51,7 +53,7 @@ public class PaymentTest {
 
         assertThrows(IllegalArgumentException.class, () -> {
             Payment payment = new Payment("3c011546-313a-4471-b897-8888e7b9cede",
-                    "VOUCHER_CODE",
+                    PaymentMethod.BANK_TRANSFER.getValue(),
                     "invalid-status",
                     paymentData
             );
