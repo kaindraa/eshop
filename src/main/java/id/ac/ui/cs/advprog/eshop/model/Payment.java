@@ -19,8 +19,6 @@ public class Payment {
     public Payment(String id, String method, String status, Map<String, String> paymentData)
     {
 
-
-
         this.id = id;
 
         String[] methodList = {"VOUCHER_CODE", "BANK_TRANSFER"};
