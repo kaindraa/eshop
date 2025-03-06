@@ -17,13 +17,13 @@ public class PaymentTest {
         paymentData.put("voucherCode", "ESHOP12345678ABC");
 
         payment = new Payment("3c011546-313a-4471-b897-8888e7b9cede",
-                "Voucher",
+                "VOUCHER_CODE",
                 "REJECTED",
                 paymentData
         );
 
         assertEquals("3c011546-313a-4471-b897-8888e7b9cede", payment.getId());
-        assertEquals("Voucher", payment.getMethod());
+        assertEquals("VOUCHER_CODE", payment.getMethod());
         assertEquals("REJECTED", payment.getStatus());
         assertEquals("paymentData", payment.getPaymentData());
 
@@ -36,7 +36,7 @@ public class PaymentTest {
 
         assertThrows(IllegalArgumentException.class, () -> {
             payment = new Payment("3c011546-313a-4471-b897-8888e7b9cede",
-                    "Voucher",
+                    "VOUCHER_CODE",
                     "testing method",
                     paymentData
             );
@@ -51,7 +51,7 @@ public class PaymentTest {
 
         assertThrows(IllegalArgumentException.class, () -> {
             payment = new Payment("3c011546-313a-4471-b897-8888e7b9cede",
-                    "Voucher",
+                    "VOUCHER_CODE",
                     "test-status",
                     paymentData
             );
