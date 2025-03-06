@@ -59,7 +59,7 @@ class PaymentServiceImplTest {
         testOrder.setStatus(OrderStatus.WAITING_PAYMENT.getValue());
 
         validVoucherPaymentData = new HashMap<>();
-        validVoucherPaymentData.put("voucherCode", "ESHOP1234ABCD5678");
+        validVoucherPaymentData.put("voucherCode", "ESHOP1234ABC5678");
 
         invalidVoucherPaymentData = new HashMap<>();
         invalidVoucherPaymentData.put("voucherCode", "ESHOP12ABC");
