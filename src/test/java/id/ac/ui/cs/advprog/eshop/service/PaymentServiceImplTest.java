@@ -143,15 +143,7 @@ class PaymentServiceImplTest {
                 validVoucherPaymentData
         );
 
-        doReturn(existingPayment).when(paymentRepository).getPayment(existingPayment.getId());
-
-        Payment updatedPayment = new Payment(
-                existingPayment.getId(),
-                existingPayment.getMethod(),
-                PaymentStatus.SUCCESS.getValue(),
-                existingPayment.getPaymentData()
-        );
-        doReturn(updatedPayment).when(paymentRepository).save(any(Payment.class));
+        doReturn(existingPayment).when(paymentRepository).save(any(Payment.class));
 
         Payment result = paymentService.setStatus(existingPayment, PaymentStatus.SUCCESS.getValue());
 
@@ -167,13 +159,12 @@ class PaymentServiceImplTest {
                 validBankPaymentData
         );
 
-        doReturn(existingPayment).when(paymentRepository).getPayment(existingPayment.getId());
-
         Payment result = paymentService.setStatus(existingPayment, "UNKNOWN_STATUS");
 
         verify(paymentRepository, times(0)).save(any(Payment.class));
         assertEquals(PaymentStatus.WAITING.getValue(), result.getStatus());
     }
+
 
     @Test
     void testGetPaymentWithValidId() {
