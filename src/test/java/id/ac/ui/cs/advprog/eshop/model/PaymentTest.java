@@ -16,7 +16,7 @@ public class PaymentTest {
         Map<String, String> paymentData = new HashMap<>();
         paymentData.put("voucherCode", "ESHOP12345678ABC");
 
-        payment = new Payment("3c011546-313a-4471-b897-8888e7b9cede",
+        Payment payment = new Payment("3c011546-313a-4471-b897-8888e7b9cede",
                 "VOUCHER_CODE",
                 "REJECTED",
                 paymentData
@@ -25,7 +25,7 @@ public class PaymentTest {
         assertEquals("3c011546-313a-4471-b897-8888e7b9cede", payment.getId());
         assertEquals("VOUCHER_CODE", payment.getMethod());
         assertEquals("REJECTED", payment.getStatus());
-        assertEquals("paymentData", payment.getPaymentData());
+        assertEquals(paymentData, payment.getPaymentData());
 
     }
 
@@ -35,9 +35,9 @@ public class PaymentTest {
         paymentData.put("voucherCode", "ESHOP12345678ABC");
 
         assertThrows(IllegalArgumentException.class, () -> {
-            payment = new Payment("3c011546-313a-4471-b897-8888e7b9cede",
-                    "VOUCHER_CODE",
-                    "testing method",
+            Payment payment = new Payment("3c011546-313a-4471-b897-8888e7b9cede",
+                    "invalid-voucher",
+                    "REJECTED",
                     paymentData
             );
         });
@@ -50,9 +50,9 @@ public class PaymentTest {
         paymentData.put("voucherCode", "ESHOP12345678ABC");
 
         assertThrows(IllegalArgumentException.class, () -> {
-            payment = new Payment("3c011546-313a-4471-b897-8888e7b9cede",
+            Payment payment = new Payment("3c011546-313a-4471-b897-8888e7b9cede",
                     "VOUCHER_CODE",
-                    "test-status",
+                    "invalid-status",
                     paymentData
             );
         });
